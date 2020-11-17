@@ -1,5 +1,5 @@
 # Super_Cluster_NATS_servers
-2 кластера из 2 и 3 серверов, объединенных в один суперкластер
+2 clusters of 2 and 3 servers connected in one super cluster
 
 Инструкция по установке.
 1. Создаем директорию /home/nats/ копируем docker-compose.yaml и директорию clust.
