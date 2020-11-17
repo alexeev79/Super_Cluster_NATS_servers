@@ -1,0 +1,75 @@
+version: "3.5"
+services:
+  cluster-1:
+    container_name: cluster-1
+    image: nats
+    ports:
+      - "8111:8222"
+      - "5001:4222"
+    volumes:
+      - /home/nats2:/etc/nats
+    command: "-c /etc/nats/n1a.conf"
+    networks:
+      - nats
+      - shar
+  nats-1:
+    container_name: Node-1-1_C1
+    image: nats
+    ports:
+      - "8112:8222"
+      - "5002:4222"
+    volumes:
+      - /home/nats2:/etc/nats
+    command: "-c /etc/nats/n1b.conf"
+    networks:
+      - nats
+      - shar
+    depends_on: ["cluster-1"]
+  cluster-2:
+    container_name: cluster-2
+    image: nats
+    ports:
+      - "8320:8222"
+      - "5301:4222"
+    volumes:
+      - /home/nats2:/etc/nats
+    command: "-c /etc/nats/n2a.conf"
+    networks:
+      - nats2
+      - shar
+    depends_on: ["nats-1"]
+  nats-2:
+    container_name: Node-2-1_C2
+    image: nats
+    ports:
+      - "8221:8222"
+      - "5202:4222"
+    volumes:
+      - /home/nats2:/etc/nats
+    command: "-c /etc/nats/n2b.conf"
+    networks:
+      - nats2
+      - shar
+    depends_on: ["cluster-2"]
+  nats-2-2:
+    container_name: Node-2-2_C2
+    image: nats
+    ports:
+      - "8222:8222"
+      - "5203:4222"
+    volumes:
+      - /home/nats2:/etc/nats
+    command: "-c /etc/nats/n2c.conf"
+    networks:
+      - nats2
+      - shar
+    depends_on: ["cluster-2"]
+
+networks:
+  shar:
+    name: shar
+  nats:
+    name: nats
+  nats2:
+    name: nats2
+
