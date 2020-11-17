@@ -1,6 +1,7 @@
 version: "3.5"
 
 services:
+
   nod1a:
     container_name: nod1a
     image: nats
