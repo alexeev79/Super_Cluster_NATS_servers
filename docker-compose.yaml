@@ -1,4 +1,5 @@
 version: "3.5"
+
 services:
   nod1a:
     container_name: nod1a
@@ -9,6 +10,7 @@ services:
       - /home/nats/clust:/etc/nats
     command: "-c /etc/nats/nod1a.conf"
     networks: ["nats"]
+
   nod1b:
     container_name: nod1b
     image: nats
@@ -17,6 +19,7 @@ services:
     command: "-c /etc/nats/nod1b.conf"
     networks: ["nats"]
     depends_on: ["nod1a"]
+
   nod2a:
     container_name: nod2a
     image: nats
@@ -27,6 +30,7 @@ services:
       - "8222:8222"
     networks: ["nats"]
     depends_on: ["nod1b"]
+
   nod2b:
     container_name: nod2b
     image: nats
@@ -35,6 +39,7 @@ services:
     command: "-c /etc/nats/nod2b.conf"
     networks: ["nats"]
     depends_on: ["nod2a"]
+
   nod2c:
     container_name: nod2c
     image: nats
