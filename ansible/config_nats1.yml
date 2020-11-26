@@ -1,0 +1,36 @@
+---
+- name: Creating autoconfiguration files for NATS servers.
+  hosts: localhost
+  
+  vars: 
+#             Specify the structure for the supercluster.
+    SCluster: 
+        - cluster1
+        - cluster2
+    cluster1:
+        - nod1a
+        - nod1b
+    cluster2:
+        - nod2a
+        - nod2b
+        - nod2c
+    master:
+#             Specify the structure for the masters servers.
+        - nod1a
+        - nod2a
+
+  tasks: 
+  - name: Create configuration
+    template:
+      src: "nats_cfg.j2"
+      dest: "/home/nats/clust/{{ item }}.conf"
+      owner: root
+      group: root
+      mode: 0644
+    loop: 
+#           Specify the names of the servers to generate the configuration for.
+      - nod1a
+      - nod1b
+      - nod2a
+      - nod2b
+      - nod2c
