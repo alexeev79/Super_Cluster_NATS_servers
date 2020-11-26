@@ -1,0 +1,23 @@
+port:4222
+
+cluster {
+  listen:{% if item in master %} 0.0.0.0{% else %} localhost{% endif %}:6222
+  routes: [
+{% for clust in SCluster %}{% if item in lookup('vars', clust) %}{% for count in lookup('vars', clust) %} "nats://{{ count }}:6222"{% if not loop.last %},{% endif %}{% endfor %}{% endif %}{% endfor %}
+
+          ]      
+        }
+
+gateway {
+{% for clust in SCluster %}{% if item in lookup('vars', clust) %}  name: "{{ clust }}"{% endif%}{% endfor %}
+
+  listen: "0.0.0.0:7555"
+  gateways: [
+{% for clust in SCluster %}
+{name: "{{ clust }}",{% for nod in lookup('vars', clust) %} url: "nats://{{ nod }}:7555"{% if not loop.last %},{% endif %}
+{% endfor %}}{% if not loop.last %},
+{% endif %}
+{% endfor %}
+
+            ]
+        }

@@ -1,0 +1,6 @@
+---
+- name: Creating autoconfiguration files for NATS servers.
+  hosts: localhost
+
+  roles:
+    - nats_autoconfiguration_supercluster_config

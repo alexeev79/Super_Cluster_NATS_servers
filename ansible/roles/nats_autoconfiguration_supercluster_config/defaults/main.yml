@@ -1,0 +1,18 @@
+---
+# defaults file for nats_autoconfiguration_supercluster_config
+
+#         Specify the structure for the supercluster.
+SCluster: 
+    - cluster1
+    - cluster2
+cluster1:
+    - nod1a
+    - nod1b
+cluster2:
+    - nod2a
+    - nod2b
+    - nod2c
+master:
+#         Specify the structure for the masters servers.
+    - nod1a
+    - nod2a
